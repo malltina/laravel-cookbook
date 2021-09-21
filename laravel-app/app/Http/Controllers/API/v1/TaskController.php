@@ -30,9 +30,14 @@ class TaskController extends Controller
         return $task;
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, int $task_id)
     {
-        //
+        $task = Task::findOrFail($task_id)->update([
+            'title' => $request->get('title'),
+            'scheduled_for' => $request->get('scheduled_for'),
+            'parent_id' => $request->get('parent_id'),
+        ]);
+        return $task;
     }
 
     public function destroy(int $task_id)
