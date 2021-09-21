@@ -7,4 +7,4 @@
 - You can filter the tasks (depending on when they were scheduled for this week, next week, the new ones, today, etc.) along with their sub-tasks.
 - You can see all the tasks along with their sub-tasks.
 - A task can be deleted 
-- Add Postman Collectoin into root project
+- Add Postman collection into root project
