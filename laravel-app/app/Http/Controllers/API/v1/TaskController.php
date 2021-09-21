@@ -36,6 +36,7 @@ class TaskController extends Controller
             'title' => $request->get('title'),
             'scheduled_for' => $request->get('scheduled_for'),
             'parent_id' => $request->get('parent_id'),
+            'completed' => $request->get('completed')
         ]);
         return $task;
     }
@@ -43,6 +44,22 @@ class TaskController extends Controller
     public function destroy(int $task_id)
     {
         $task = Task::findOrFail($task_id)->delete();
+        return $task;
+    }
+
+    public function makeCompleted(int $task_id)
+    {
+        $task = Task::findOrFail($task_id)->update([
+            'completed' => 1,
+        ]);
+        return $task;
+    }
+
+    public function makeUnCompleted(int $task_id)
+    {
+        $task = Task::findOrFail($task_id)->update([
+            'completed' => 0,
+        ]);
         return $task;
     }
 }
