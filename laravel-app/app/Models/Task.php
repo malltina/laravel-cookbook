@@ -10,4 +10,9 @@ class Task extends Model
     use HasFactory;
 
     protected $fillable = ['title','scheduled_for','parent_id','completed'];
+
+    public function children()
+  {
+    return $this->hasMany('App\Models\Task', 'parent_id');
+  }
 }

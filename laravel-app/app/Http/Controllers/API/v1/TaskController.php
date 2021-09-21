@@ -10,7 +10,8 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return Task::all();
+        $tasks = Task::with('children')->whereNull('parent_id')->get();
+        return $tasks;
     }
 
     public function store(Request $request)
