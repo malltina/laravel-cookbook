@@ -17,5 +17,4 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('tasks/{taskId}/completed', [TaskController::class, 'makeCompleted']);
     Route::post('tasks/{taskId}/uncompleted', [TaskController::class, 'makeUnCompleted']);
     
-
 });
