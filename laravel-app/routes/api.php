@@ -11,6 +11,4 @@ Route::group(['prefix' => 'v1'], function () {
     Route::put('tasks/{taskId}', [TaskController::class, 'update']);
     Route::delete('tasks/{taskId}', [TaskController::class, 'destroy']);
     Route::patch('tasks/{taskId}/toggle', [TaskController::class, 'toggle']);
-    Route::patch('tasks/{taskId}/completed', [TaskController::class, 'makeCompleted']);
-    Route::patch('tasks/{taskId}/uncompleted', [TaskController::class, 'makeUnCompleted']);
 });

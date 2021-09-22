@@ -79,26 +79,6 @@ class TaskController extends Controller
         return $task;
     }
 
-    public function makeCompleted(int $task_id)
-    {
-        $task = Task::findOrFail($task_id);
-        $task->update([
-            'completed' => 1,
-        ]);
-
-        return $task;
-    }
-
-    public function makeUnCompleted(int $task_id)
-    {
-        $task = Task::findOrFail($task_id);
-        $task->update([
-            'completed' => 0,
-        ]);
-
-        return $task;
-    }
-
     public function filter(Request $request)
     {
         $scheduled_for = $request->get('scheduled_for');
