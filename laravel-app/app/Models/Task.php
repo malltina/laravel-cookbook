@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-  use HasFactory;
 
-  protected $fillable = ['title', 'scheduled_for', 'parent_id', 'completed'];
+    use HasFactory;
 
-  public function children()
-  {
-    return $this->hasMany('App\Models\Task', 'parent_id');
-  }
+    protected $fillable = ['title', 'scheduled_for', 'parent_id', 'completed'];
+    protected $casts    = [
+        'completed' => 'boolean',
+    ];
+
+    public function children()
+    {
+        return $this->hasMany('App\Models\Task', 'parent_id');
+    }
 }
