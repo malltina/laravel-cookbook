@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTasksTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -15,11 +16,21 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
             $table->boolean('completed')->default(false);
             $table->timestamp('scheduled_for');
             $table->timestamps();
+//            $table->unsignedBigInteger('parent_id')->nullable();
+//
+//            $table->foreign('parent_id')
+//                  ->references('id')
+//                  ->on('tasks')
+//                  ->onDelete('cascade');
+//
+            $table->foreignId('parent_id')
+                  ->nullable()
+                  ->constrained('tasks')
+                  ->onDelete('set null');// parents
         });
     }
 

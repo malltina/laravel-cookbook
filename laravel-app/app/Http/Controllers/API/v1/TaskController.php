@@ -11,12 +11,12 @@ class TaskController extends Controller
 {
 
     protected const MAP = [
-        'this_week' => 'weekTask',
-        'next_week' => 'nextWeekTask',
-        'today'     => 'todayTask',
-        'tomorrow'  => 'tomarrowTask',
-        'completed'  => 'completed',
-        'uncompleted'  => 'uncompleted',
+        'this_week'   => 'weekTask',
+        'next_week'   => 'nextWeekTask',
+        'today'       => 'todayTask',
+        'tomorrow'    => 'tomarrowTask',
+        'completed'   => 'completed',
+        'uncompleted' => 'uncompleted',
     ];
 
     public function index()
@@ -32,25 +32,25 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $task = Task::create([
-            'title'         => $request->get('title'),
-            'scheduled_for' => $request->get('scheduled_for'),
-            'parent_id'     => $request->get('parent_id'),
+        $attributes = $request->validate([
+            'title' => ['required','string'],
+            'scheduled_for'=>['required','date'],
+            'parent_id' =>['exists:tasks,id']
         ]);
+        $task = Task::create($attributes);
 
         return $task;
     }
 
-    public function show(int $task_id)
+    public function show(Task $task)
     {
-        $task = Task::with('children')->where('id', $task_id)->get();
+        $task->load('children');
 
         return $task;
     }
 
-    public function update(Request $request, int $task_id)
+    public function update(Request $request, Task $task)
     {
-        $task = Task::findOrFail($task_id);
         $task->update([
             'title'         => $request->get('title'),
             'scheduled_for' => $request->get('scheduled_for'),
