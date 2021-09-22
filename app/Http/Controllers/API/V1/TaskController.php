@@ -31,6 +31,16 @@ class TaskController extends Controller
         return Task::query()->where('due_at', $due_at)->get();
     }
 
+    public function isComplete(Request $request, int $taskId)
+    {
+        $task=Task::query()->findOrFail($taskId);
+        $is_completed = $request->get('is_completed');
+
+        $task->update([
+            'is_completed' => $is_completed
+        ]);
+    }
+
     public function destroy(Task $task)
     {
         $task->delete();
