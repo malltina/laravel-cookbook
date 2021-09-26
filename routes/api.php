@@ -22,6 +22,6 @@ Route::group(['prefix' => 'v1','as'=>'tasks.'], function () {
     Route::get('tasks/schedule', [TaskController::class, 'schedule']);
     Route::get('tasks', [TaskController::class, 'index']);
     Route::put('tasks/{task}', [TaskController::class, 'update']);
-    Route::delete('tasks/{taskId}', [TaskController::class, 'destroy']);
+    Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
 
 });
