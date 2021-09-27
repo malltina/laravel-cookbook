@@ -25,6 +25,6 @@ Route::group(['prefix' =>'v1'],function(){
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
     Route::get('/tasks/{task}', [TaskController::class, 'show']);
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
-    Route::get('/tasks/{tasks?}', [TaskController::class, 'taskFilter']);
+    Route::get('task/filter', [TaskController::class, 'filter']);
     Route::patch('/tasks/{task}/toggle-completed', [TaskController::class, 'toggleCompleted']);
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -63,5 +64,17 @@ class TaskController extends Controller
         $task->update([
             'is_completed' => !$task->is_completed
         ]);
+    }
+
+    public function filter(Request $request)
+    {
+        $method = $request->get('name');
+        return $this->$method();
+    }
+    public function todayTask()
+    {
+        $tasks = Task::whereDate('due_at', Carbon::today())
+            ->get();
+        return $tasks;
     }
 }
