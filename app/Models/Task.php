@@ -13,20 +13,13 @@ class Task extends Model
         'description',
         'is_completed',
         'due_at',
-        'task_id'
+        'parent_id'
     ];
 
-    public static function where(string $string, $input)
-    {
-    }
 
-    public function parent()
-    {
-        return $this->belongsTo(Task::class, 'task_id');
-    }
 
     public function children()
     {
-        return $this->hasMany(Task::class, 'task_id');
+        return $this->hasMany(Task::class, 'parent_id');
     }
 }

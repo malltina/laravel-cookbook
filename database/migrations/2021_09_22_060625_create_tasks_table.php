@@ -17,9 +17,13 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('title');
             $table->mediumText('description');
-            $table->boolean('is_completed');
-            $table->enum('due_at', ['today', 'next week', 'this week'])->nullable();
-            $table->foreignId('task_id')->nullable();
+            $table->boolean('is_completed')->default(false);
+            $table->timestamp('due_at');
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->constrained('tasks')
+                ->onDelete('set null')
+            ;
             $table->timestamps();
         });
     }

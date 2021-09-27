@@ -15,12 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::get('/tasks', [TaskController::class, 'index']);
-Route::post('/tasks', [TaskController::class, 'store']);
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
-Route::get('/tasks/{tasks?}', [TaskController::class, 'taskFilter']);
-Route::patch('/tasks/{taskId}', [TaskController::class, 'isComplete']);
+Route::group(['prefix' =>'v1'],function(){
+    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::post('/tasks', [TaskController::class, 'store']);
+    Route::put('/tasks/{task}', [TaskController::class, 'update']);
+    Route::get('/tasks/{task}', [TaskController::class, 'show']);
+    Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+    Route::get('/tasks/{tasks?}', [TaskController::class, 'taskFilter']);
+    //Route::patch('/tasks/{taskId}', [TaskController::class, 'isComplete']);
+});
