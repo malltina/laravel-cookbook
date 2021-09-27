@@ -71,10 +71,16 @@ class TaskController extends Controller
         $method = $request->get('name');
         return $this->$method();
     }
+
     public function todayTask()
     {
-        $tasks = Task::whereDate('due_at', Carbon::today())
+        return Task::whereDate('due_at', Carbon::today())
             ->get();
-        return $tasks;
+    }
+
+    public function tomarrowTask()
+    {
+        return Task::whereDate('due_at', Carbon::tomorrow())
+            ->get();
     }
 }
