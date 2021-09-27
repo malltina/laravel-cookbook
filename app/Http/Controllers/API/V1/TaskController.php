@@ -81,10 +81,18 @@ class TaskController extends Controller
     {
         return Task::whereDate('due_at', Carbon::tomorrow())->get();
     }
+
     public function completed()
     {
         return Task::with('children')
             ->where('is_completed', true)
+            ->get();
+    }
+
+    public function uncompleted()
+    {
+        return Task::with('children')
+            ->where('is_completed', false)
             ->get();
     }
 }
