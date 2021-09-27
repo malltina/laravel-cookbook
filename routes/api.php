@@ -26,5 +26,5 @@ Route::group(['prefix' =>'v1'],function(){
     Route::get('/tasks/{task}', [TaskController::class, 'show']);
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
     Route::get('/tasks/{tasks?}', [TaskController::class, 'taskFilter']);
-    //Route::patch('/tasks/{taskId}', [TaskController::class, 'isComplete']);
+    Route::patch('/tasks/{task}/toggle-completed', [TaskController::class, 'toggleCompleted']);
 });
