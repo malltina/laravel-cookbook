@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Post;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,12 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
-    protected $rules = [
-        'name' => 'required|max:60',
-        'description' => 'max:155',
-        'completed' => 'numeric',
-
-    ];
 
 
     public function index(Request $request)
@@ -27,60 +25,32 @@ class TaskController extends Controller
     }
 
 
-    public function create()
+    public function store(StoreTaskRequest $request)
     {
-        return view('tasks.create');
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, $this->rules);
-        $user = Auth::user();
-        $task = $request->all();
-        $task['user_id'] = $user->id;
-        Task::create($task);
+        $attribute = array_merge($request->validated(), ['user_id' => Auth::id()]);
+        Task::create($attribute);
+        //return
 
     }
 
 
-    public function update(Task $task, Request $request, $id)
+    public function update(Task $task, UpdateTaskRequest $request)
     {
-        $this->validate($request, $this->rules);
-
-        $task = Task::findOrFail($id);
-        $task->name = $request->input('name');
-        $task->description = $request->input('description');
-        $task->completed = $request->input('completed');
-        $task->save();
+        $task->update($request->validated());
+        //return
 
 
     }
 
 
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        Task::findOrFail($id)->delete();
+        $task->delete();
+        //returrn
 
 
     }
 
-    public function completed()
-    {
-        $tasks = Task::with('users')
-            ->where('completed', true)
-            ->get();
-
-        return $tasks;
-    }
-
-    public function uncompleted()
-    {
-        $tasks = Task::with('users')
-            ->where('completed', false)
-            ->get();
-
-        return $tasks;
-    }
 
     protected function schedule(Schedule $schedule)
     {
