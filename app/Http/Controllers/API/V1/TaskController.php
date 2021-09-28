@@ -95,4 +95,12 @@ class TaskController extends Controller
             ->where('is_completed', false)
             ->get();
     }
+
+    public function nextWeekTasks()
+    {
+        return Task::with('children')
+            ->whereBetween('due_at',
+                [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()->addDays(7)])
+            ->get();
+    }
 }
