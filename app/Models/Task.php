@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+
+    protected $with=['children'];
+
     protected $fillable = [
         'title',
         'description',
@@ -15,8 +18,6 @@ class Task extends Model
         'due_at',
         'parent_id'
     ];
-
-
 
     public function children()
     {

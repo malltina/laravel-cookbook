@@ -16,14 +16,13 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->mediumText('description');
+            $table->mediumText('description')->default('');
             $table->boolean('is_completed')->default(false);
             $table->timestamp('due_at');
             $table->foreignId('parent_id')
                 ->nullable()
                 ->constrained('tasks')
-                ->onDelete('set null')
-            ;
+                ->onDelete('set null');
             $table->timestamps();
         });
     }
